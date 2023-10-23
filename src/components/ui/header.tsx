@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
 import { signIn, signOut, useSession } from "next-auth/react"
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "@radix-ui/react-separator";
+import { useEffect, useState } from "react";
 
 const Header = () => {
 
@@ -17,7 +18,24 @@ const Header = () => {
     const handleLogoutClick = async() => {
         await signOut();
     }
-      
+    
+    const [saudacao, setSaudacao] = useState('');
+
+    useEffect(()=>{
+  
+      function getSaudacao(){
+    
+        let dataHora = new Date();
+        let xHora = dataHora.getHours();
+    
+        if (xHora >= 0 && xHora <12) {setSaudacao('Bom Dia, ')}
+        if (xHora >= 12 && xHora < 18) {setSaudacao('Boa Tarde, ')}
+        if (xHora >= 18 && xHora <= 23) {setSaudacao('Boa Noite, ')}
+    
+      }
+      getSaudacao();
+    
+    },[])
 
     return ( 
         <Card className="flex justify-between p-[1.875rem]">
@@ -43,7 +61,7 @@ const Header = () => {
                                     </Avatar>
                                     <div className="flex flex-col">
                                         <p className="font-medium">{data.user.name}</p>
-                                        <p className="text-sm opacity-75" >Boas Compras 🛍️🛒</p>
+                                        <p className="text-sm opacity-75" >{saudacao} boas Compras 🛍️🛒</p>
                                     </div>
                                 </div>
                             <Separator />
