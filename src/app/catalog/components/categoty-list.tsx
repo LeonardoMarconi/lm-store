@@ -7,7 +7,7 @@ interface CategoryListProps{
 
 const CategoryList = ({categories}: CategoryListProps) => {
     return (
-        <div className="grid grid-cols-2 gap-4 overflow-x-auto p-5 ">
+        <div className="flex flex-wrap justify-center w-full gap-4 overflow-x-auto p-5 ">
             {categories.map(category =><CategoryItem key={category.id} category={category} />)}
         </div>
      );

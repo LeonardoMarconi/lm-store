@@ -10,7 +10,7 @@ interface ProductItemProps{
 const ProductItem = ({product}:ProductItemProps) => {
     return ( 
     <div className="flex flex-col gap-4 ">
-        <div className="relative bg-accent rounded-lg h-[170px] w-full flex justify-center items-center">
+        <div className="relative bg-accent rounded-lg h-[170px] w-[170px] flex justify-center items-center">
             <Image 
                 src={product.imageUrls[0]}
                 height={0}
@@ -38,7 +38,7 @@ const ProductItem = ({product}:ProductItemProps) => {
                     <p className="opacity-75 line-through text-[11px]">{Number(product.basePrice).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
                     </>
                 ):(
-                    <p className="font-semibold text-sm">{Number(product.basePrice).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+                    <p className="font-semibold">{Number(product.basePrice).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
                 )}
                 
             </div>

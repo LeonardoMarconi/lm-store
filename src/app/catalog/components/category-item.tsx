@@ -10,7 +10,7 @@ interface CategoryItemProps{
 const CategoryItem = ({category}:CategoryItemProps) => {
     return ( 
     <Link href={`/category/${category.slug}`}>
-         <div className="flex flex-col ">
+         <div className="flex flex-col w-[180px] ">
             <div className="relative bg-accent rounded-t-lg h-[170px] w-full flex justify-center items-center bg-gradient-to-t from-primary to-secondary">
                 <Image 
                     src={category.imageUrl}

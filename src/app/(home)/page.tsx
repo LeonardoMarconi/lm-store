@@ -38,11 +38,13 @@ export default async function Home() {
  
   return (
     <div className='flex flex-col gap-8 py-8'>
-      <div className="px-5">
-        <Banner />
-      </div>
-      <div className="mt-8 px-5">
-        <Categories />
+      <div className='sm:grid grid-cols-2'>
+        <div className="px-5">
+          <Banner />
+        </div>
+        <div className="mt-8 px-5">
+          <Categories />
+        </div>
       </div>
       <div className='mt-8 px-5'>
         <h1 className='font-bold text-base'>OFERTAS</h1>
@@ -50,23 +52,27 @@ export default async function Home() {
       <div className='mt-[-25px]'>
         <ProductList products={deals} />
       </div>
-      <div className="mt-8 px-5 w-full ">
-        <BannerCard />
+      <div className="sm:grid grid-cols-2">
+        <div className='mt-[-25px]'>
+          <div className='mt-8 px-5'>
+            <h1 className='font-bold text-base'>TECLADOS</h1>
+          </div>
+          <ProductList products={keyboards} />
+        </div>
+        <div className="mt-8 px-5 w-full ">
+          <BannerCard />
+        </div>
       </div>
-      <div className='mt-8 px-5'>
-        <h1 className='font-bold text-base'>TECLADOS</h1>
-      </div>
-      <div className='mt-[-25px]'>
-        <ProductList products={keyboards} />
-      </div>
-      <div className="mt-8 px-5 w-full ">
-        <BannerCard />
-      </div>
-      <div className='mt-8 px-5'>
-        <h1 className='font-bold text-base'>MOUSES</h1>
-      </div>
-      <div className='mt-[-25px]'>
-        <ProductList products={mouses} />
+      <div className="sm:grid grid-cols-2">
+        <div className="mt-8 px-5 w-full ">
+          <BannerCard />
+        </div>
+        <div className='mt-[-25px]'>
+          <div className='mt-8 px-5'>
+            <h1 className='font-bold text-base'>MOUSES</h1>
+          </div>
+          <ProductList products={mouses} />
+        </div>
       </div>
 
     </div>

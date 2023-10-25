@@ -40,7 +40,7 @@ const Banner = () => {
             src="/banner_home_02.png"
             height={0}
             width={0}
-            className='h-auto w-full'
+            className='h-full w-full'
             sizes='100vw'
             alt='Periféricos a partir de R$ 99,00'
           />
