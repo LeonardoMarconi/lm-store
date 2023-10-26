@@ -30,7 +30,7 @@ const ProductInfo = ({product:{basePrice, totalPrice, description, discountPerce
     }
 
     return ( 
-        <div className="flex flex-col mt-8 p-5 md:w-[70%]">
+        <div className="flex flex-col mt-1 p-5 md:w-[70%]">
             <p className="opacity-75 text-[12px] pt-2">Novo</p>
             <h2 className="text-lg ">{name}</h2>
             <p className="text-primary text-[12px] pb-2">Disponível em estoque</p>

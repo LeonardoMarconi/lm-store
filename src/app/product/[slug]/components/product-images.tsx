@@ -17,7 +17,7 @@ const ProductImages = ({imageUrls, name}: ProductImagesProps) => {
 
     return ( 
         <div className="flex flex-wrap justify-center">
-            <div className="bg-accent h-[380px] w-full items-center justify-center flex md:w-[70%]">
+            <div className="bg-accent h-[380px] w-full items-center justify-center flex">
                 <Image src={currentImage} alt={name} height={0} width={0} sizes="100vw"
                     className="h-auto max-h-[70%] w-auto max-w-[80%]"
                     style={{

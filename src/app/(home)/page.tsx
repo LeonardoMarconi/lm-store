@@ -1,8 +1,10 @@
 import Categories from './components/categories';
 import { prismaClient } from '@/lib/prisma';
 import Banner from '@/components/ui/banner';
-import ProductList from './components/product-list';
+import ProductList from '../../components/ui/product-list';
 import BannerCard from '@/components/ui/banner-card';
+import ProductItem from '@/components/ui/product-item';
+import computeProductTotalPrice from '@/helpers/product';
 
 export default async function Home() {
 
@@ -25,13 +27,13 @@ export default async function Home() {
     },
   });
 
-  const mouses = await prismaClient.product.findMany({
+  const mousepads = await prismaClient.product.findMany({
     where:{
       discountPercentage:{
         gt: 0,
       },
       category: {
-        slug: "mouses"
+        slug: "mousepads"
       }
     },
   });
@@ -49,32 +51,33 @@ export default async function Home() {
       <div className='mt-8 px-5'>
         <h1 className='font-bold text-base'>OFERTAS</h1>
       </div>
-      <div className='mt-[-25px]'>
+      <div className='mt-[-25px] w-full'>
         <ProductList products={deals} />
       </div>
-      <div className="sm:grid grid-cols-2">
-        <div className='mt-[-25px]'>
+      <div className="sm:grid grid-flow-col auto-cols-max w-full">
+        <div className='mt-[-25px] w-full'>
           <div className='mt-8 px-5'>
             <h1 className='font-bold text-base'>TECLADOS</h1>
           </div>
           <ProductList products={keyboards} />
         </div>
-        <div className="mt-8 px-5 w-full ">
+        <div className="md:w-[370px] px-5 ">
           <BannerCard />
         </div>
       </div>
-      <div className="sm:grid grid-cols-2">
-        <div className="mt-8 px-5 w-full ">
+      <div className="sm:grid grid-flow-col auto-cols-max w-full mb-8">
+        <div className="md:w-[370px] sm:flex hidden px-5 ">
           <BannerCard />
         </div>
-        <div className='mt-[-25px]'>
+        <div className='mt-[-25px] w-full'>
           <div className='mt-8 px-5'>
-            <h1 className='font-bold text-base'>MOUSES</h1>
+            <h1 className='font-bold text-base'>MOUSEPADS</h1>
           </div>
-          <ProductList products={mouses} />
+          <ProductList products={mousepads} />
         </div>
+        
       </div>
-
+      
     </div>
   )
 }

@@ -4,31 +4,30 @@ import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
-import 'swiper/css/effect-creative';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
-
-import { EffectCreative } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 
 const BannerCard = () => {
     return ( 
         <Swiper
-        grabCursor={true}
-        effect={'creative'}
-        creativeEffect={{
-          prev: {
-            shadow: true,
-            translate: [0, 0, -400],
-          },
-          next: {
-            translate: ['100%', 0, 0],
-          },
+        spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 1500,
+          disableOnInteraction: true,
         }}
-        modules={[EffectCreative]}
+        pagination={{
+          clickable: false,
+        }}
+        navigation={false}
+        modules={[Autoplay, Pagination]}
         className="mySwiper"
       >
         <SwiperSlide>
           <Image 
-          src="/banner_home_01.png"
+          src="/1.png"
           height={0}
           width={0}
           className='h-auto w-full'
@@ -38,7 +37,7 @@ const BannerCard = () => {
         </SwiperSlide>
         <SwiperSlide>
           <Image 
-            src="/banner_home_02.png"
+            src="/2.png"
             height={0}
             width={0}
             className='h-auto w-full'
@@ -48,7 +47,7 @@ const BannerCard = () => {
         </SwiperSlide>
         <SwiperSlide>
           <Image 
-            src="/banner_home_03.png"
+            src="/3.png"
             height={0}
             width={0}
             className='h-auto w-full'
