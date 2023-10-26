@@ -62,7 +62,7 @@ const Header = () => {
                                     </Avatar>
                                     <div className="flex flex-col">
                                         <p className="font-medium">{data.user.name}</p>
-                                        <p className="text-sm opacity-75" >{saudacao} boas Compras 🛍️🛒</p>
+                                        <p className="text-sm opacity-75" >{saudacao} boas compras 🛍️🛒</p>
                                     </div>
                                 </div>
                             <Separator />
