@@ -3,8 +3,6 @@ import { prismaClient } from '@/lib/prisma';
 import Banner from '@/components/ui/banner';
 import ProductList from '../../components/ui/product-list';
 import BannerCard from '@/components/ui/banner-card';
-import ProductItem from '@/components/ui/product-item';
-import computeProductTotalPrice from '@/helpers/product';
 
 export default async function Home() {
 
