@@ -2,6 +2,9 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ToastAction } from "@/components/ui/toast";
+import { toast, useToast } from "@/components/ui/use-toast";
 import { ProductWithTotalPrice } from "@/helpers/product";
 import { CartContext } from "@/providers/cart";
 import { ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon, TruckIcon } from "lucide-react";
@@ -12,8 +15,8 @@ interface ProductInfoProps{
 }
 
 const ProductInfo = ({product}:ProductInfoProps) => {
-
     const [quantity, setQuantity] = useState(1);
+    const { toast } = useToast();
     const {addProductToCart} = useContext(CartContext);
 
     const handleDecreaseQuantityClick = () =>{
@@ -26,6 +29,16 @@ const ProductInfo = ({product}:ProductInfoProps) => {
 
     const handleAddToCartClick = () =>{
         addProductToCart({...product, quantity});
+    }
+
+    function handleMessageCart(){
+        toast({
+            variant: "primary",
+            title: "LM Store",
+            description: `${product.name} incluído no carrinho com sucesso 😊 `,
+            action: <ToastAction altText="Ir para Carrinho">Fechar</ToastAction>,
+          });
+        handleAddToCartClick();
     }
 
     return ( 
@@ -62,7 +75,7 @@ const ProductInfo = ({product}:ProductInfoProps) => {
                 <h3 className="font-bold">Descrição</h3>
                 <p className="opacity-60 text-sm text-justify">{product.description}</p>
             </div>
-            <Button className="w-full bg-primary p-5 mt-8 uppercase font-bold" onClick={handleAddToCartClick}>
+            <Button className="w-full bg-primary p-5 mt-8 uppercase font-bold" onClick={handleMessageCart}>
                 Adicionar o carrinho
             </Button>
             <div className="bg-accent flex items-center mt-5 px-5 rounded-lg justify-between">
