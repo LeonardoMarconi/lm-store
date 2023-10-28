@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/ui/header'
+import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from '@/providers/auth'
 import Footer from '@/components/ui/footer'
 import CartProvider from '@/providers/cart'
@@ -28,6 +29,7 @@ export default function RootLayout({
               <div className="flex-1">
                 {children}
               </div>
+              <Toaster />
               <Footer />
             </CartProvider>
           </AuthProvider>
