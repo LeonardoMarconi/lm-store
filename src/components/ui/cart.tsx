@@ -7,9 +7,10 @@ import computeProductTotalPrice from "@/helpers/product";
 import { Button } from "./button";
 import Link from "next/link";
 import { SheetClose } from "./sheet";
+import { Separator } from "./separator";
 
 const Cart = () => {
-    const {products} = useContext(CartContext);
+    const {products, total, subtotal, totalDiscount} = useContext(CartContext);
     return ( 
         <div className="flex flex-col gap-8">
             <Badge className="w-fit gap-1 text-base uppercase border-primary border-2 px-3 py-[0.375rem]" variant="outline">
@@ -38,6 +39,28 @@ const Cart = () => {
                 <CartItem  key={product.id} product={computeProductTotalPrice(product as any) as any} />
             </div>
         ))}
+        <div className="flex flex-col gap-3">
+            <Separator />
+            <div className="flex items-center justify-between text-sm">
+                <p>Subtotal</p>
+                <p>{subtotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between text-sm">
+                <p>Entrega</p>
+                <p>Grátis</p>
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between text-sm">
+                <p>Descontos</p>
+                <p>{totalDiscount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+            </div>
+            <Separator />
+            <div className="flex items-center justify-between text-lg font-bold">
+                <p>Total</p>
+                <p>{total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+            </div>
+        </div>
         </div>
      );
 }
