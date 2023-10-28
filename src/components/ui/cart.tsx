@@ -9,9 +9,23 @@ import Link from "next/link";
 import { SheetClose } from "./sheet";
 import { Separator } from "./separator";
 import { ScrollArea, ScrollBar } from "./scroll-area";
+import { createCheckout } from "@/actions/checkout";
+import { loadStripe } from '@stripe/stripe-js';
 
 const Cart = () => {
     const {products, total, subtotal, totalDiscount} = useContext(CartContext);
+
+    const handleFinishPurchaseClick = async() => {
+        const checkout = await createCheckout(products);
+        const stripe = await loadStripe(
+            process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+        )
+
+        stripe?.redirectToCheckout({
+            sessionId: checkout.id,
+        });
+    };
+
     return ( 
         <div className="flex h-full flex-col gap-8">
             <Badge className="w-fit gap-1 text-base uppercase border-primary border-2 px-3 py-[0.375rem]" variant="outline">
@@ -64,7 +78,7 @@ const Cart = () => {
                 <p>Total</p>
                 <p>{total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
             </div>
-            <Button className="uppercase font-bold mt-7">
+            <Button className="uppercase font-bold mt-7" onClick={handleFinishPurchaseClick}>
                 Finalizar Compra
             </Button>
         </div>
