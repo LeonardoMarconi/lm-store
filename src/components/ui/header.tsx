@@ -7,13 +7,17 @@ import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from "./sh
 import { signIn, signOut, useSession } from "next-auth/react"
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "@radix-ui/react-separator";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Cart from "./cart";
+import { CartContext } from "@/providers/cart";
+import { Badge } from "./badge";
 
 const Header = () => {
 
     const {status, data} = useSession();
+    const {products} = useContext(CartContext);
+
     const handleLoginClick = async() => {
         await signIn();
     }
@@ -123,8 +127,13 @@ const Header = () => {
 
             <Sheet>
                 <SheetTrigger asChild>
-                    <Button size="icon" variant="outline">
+                    <Button  className="relative flex flex-row justify-center p-2" size="icon" variant="outline">
                         <ShoppingCartIcon />
+                            {products.length != 0 && (
+                                <Badge className="absolute bg-destructive hover:bg-destructive right-[-12px] top-[-12px] px-2 py-[2px]">
+                                    {products.length}
+                                </Badge>
+                            )}
                     </Button>
                 </SheetTrigger>
                 <SheetContent>
