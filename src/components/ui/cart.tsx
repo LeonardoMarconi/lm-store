@@ -11,6 +11,8 @@ import { Separator } from "./separator";
 import { ScrollArea, ScrollBar } from "./scroll-area";
 import { createCheckout } from "@/actions/checkout";
 import { loadStripe } from '@stripe/stripe-js';
+import { toast } from "./use-toast";
+import { ToastAction } from "./toast";
 
 const Cart = () => {
     const {products, total, subtotal, totalDiscount} = useContext(CartContext);
@@ -20,11 +22,25 @@ const Cart = () => {
         const stripe = await loadStripe(
             process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
         )
-
         stripe?.redirectToCheckout({
             sessionId: checkout.id,
         });
     };
+
+    const validateCartEmpty = () =>{
+        if(products.length === 0){
+            toast({
+                variant: "default",
+                title: "Aviso ⚠️⚠️⚠️",
+                description: 'Seu carrinho está vazio 😲, não é possivel finalizar a compra ...',
+                action:<ToastAction altText="Fechar">
+                            Fechar
+                        </ToastAction>,
+              });
+        }else{
+            handleFinishPurchaseClick;
+        }
+    }
 
     return ( 
         <div className="flex h-full flex-col gap-8">
@@ -78,7 +94,7 @@ const Cart = () => {
                 <p>Total</p>
                 <p>{total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
             </div>
-            <Button className="uppercase font-bold mt-7" onClick={handleFinishPurchaseClick}>
+            <Button className="uppercase font-bold mt-7" onClick={validateCartEmpty}>
                 Finalizar Compra
             </Button>
         </div>

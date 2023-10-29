@@ -6,7 +6,7 @@ import { Card } from "./card";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
 import { signIn, signOut, useSession } from "next-auth/react"
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
-import { Separator } from "@radix-ui/react-separator";
+import { Separator } from "./separator";
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Cart from "./cart";
