@@ -1,6 +1,6 @@
 import { ShoppingBagIcon, ShoppingCartIcon } from "lucide-react";
 import { Badge } from "./badge";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "@/providers/cart";
 import CartItem from "./cart-item";
 import computeProductTotalPrice from "@/helpers/product";
@@ -14,10 +14,12 @@ import { loadStripe } from '@stripe/stripe-js';
 import { toast } from "./use-toast";
 import { ToastAction } from "./toast";
 import { signIn, useSession } from "next-auth/react";
+import { ThreeDots } from "react-loader-spinner";
 
 const Cart = () => {
     const {products, total, subtotal, totalDiscount} = useContext(CartContext);
     const {status} = useSession();
+    const [loading, setLoading] = useState(false);
 
     const handleFinishPurchaseClick = async () =>{
         if(status === 'unauthenticated'){
@@ -40,6 +42,7 @@ const Cart = () => {
                         </ToastAction>,
               });
         }else{
+            setLoading(true);
             const checkout = await createCheckout(products);
             const stripe = await loadStripe(
                 process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
@@ -47,6 +50,7 @@ const Cart = () => {
             stripe?.redirectToCheckout({
                 sessionId: checkout.id,
             });
+            setLoading(false)
         }
     }
 
@@ -103,7 +107,17 @@ const Cart = () => {
                 <p>{total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
             </div>
             <Button className="uppercase font-bold mt-7" onClick={handleFinishPurchaseClick}>
-                Finalizar Compra
+                {loading ? <ThreeDots 
+                            height="20" 
+                            width="50" 
+                            radius="9"
+                            color="#fff" 
+                            ariaLabel="three-dots-loading"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                            /> 
+                            : <p>Finalizar compra</p>}
             </Button>
         </div>
         </div>

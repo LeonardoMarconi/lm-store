@@ -27,7 +27,8 @@ export const POST = async (request: Request) => {
               expand: ['line_items'],
             }
           );
-          const lineItems = sessionWithLineItems.line_items;
+        const lineItems = sessionWithLineItems.line_items;
+        
     }
     return NextResponse.json({ received: true});
 };
