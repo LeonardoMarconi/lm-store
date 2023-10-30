@@ -1,12 +1,13 @@
 "use server";
 
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { CartProduct } from "@/providers/cart";
-import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
 import Stripe from 'stripe';
 
 export const createCheckout = async (products: CartProduct[]) => {
 
-    const {data} = useSession();
+    const data = await getServerSession(authOptions);
     
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY,{
         apiVersion: "2023-10-16",
@@ -17,7 +18,11 @@ export const createCheckout = async (products: CartProduct[]) => {
         mode:'payment',
         success_url:'http://localhost:3000/',
         cancel_url:'http://localhost:3000/',
-        customer_email: String(data?.user?.email),
+        customer_email: (String(data?.user?.email)),
+        billing_address_collection: 'auto',
+        shipping_address_collection: {
+        allowed_countries: ['BR'],
+        },
         line_items:products.map(product => {
             return{
                 price_data:{

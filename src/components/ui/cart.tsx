@@ -13,22 +13,24 @@ import { createCheckout } from "@/actions/checkout";
 import { loadStripe } from '@stripe/stripe-js';
 import { toast } from "./use-toast";
 import { ToastAction } from "./toast";
+import { signIn, useSession } from "next-auth/react";
 
 const Cart = () => {
     const {products, total, subtotal, totalDiscount} = useContext(CartContext);
+    const {status} = useSession();
 
-    const handleFinishPurchaseClick = async() => {
-        const checkout = await createCheckout(products);
-        const stripe = await loadStripe(
-            process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
-        )
-        stripe?.redirectToCheckout({
-            sessionId: checkout.id,
-        });
-    };
-
-    const validateCartEmpty = () =>{
-        if(products.length === 0){
+    const handleFinishPurchaseClick = async () =>{
+        if(status === 'unauthenticated'){
+            toast({
+                variant: "default",
+                title: "Aviso ⚠️⚠️⚠️",
+                description: 'Você precisa estar logado para finalizar sua compra... Aguarde, você será redirecionado...',
+                action:<ToastAction altText="Fechar">
+                            Fechar
+                        </ToastAction>,
+              });
+              await signIn();
+        }else if(products.length <= 0){
             toast({
                 variant: "default",
                 title: "Aviso ⚠️⚠️⚠️",
@@ -38,7 +40,13 @@ const Cart = () => {
                         </ToastAction>,
               });
         }else{
-            handleFinishPurchaseClick;
+            const checkout = await createCheckout(products);
+            const stripe = await loadStripe(
+                process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+            )
+            stripe?.redirectToCheckout({
+                sessionId: checkout.id,
+            });
         }
     }
 
@@ -94,7 +102,7 @@ const Cart = () => {
                 <p>Total</p>
                 <p>{total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
             </div>
-            <Button className="uppercase font-bold mt-7" onClick={validateCartEmpty}>
+            <Button className="uppercase font-bold mt-7" onClick={handleFinishPurchaseClick}>
                 Finalizar Compra
             </Button>
         </div>

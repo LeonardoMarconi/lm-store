@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY,{
     apiVersion: "2023-10-16",
 })
 
-const POST = async (request: Request) => {
+export const POST = async (request: Request) => {
     const signature = request.headers.get('stripe-signature');
 
     if (!signature){
@@ -19,6 +19,16 @@ const POST = async (request: Request) => {
         signature,
         process.env.STRIPE_WEBHOOK_SECRET_KEY
     );
-}
+
+    if(event.type === 'checkout.session.completed'){
+        const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
+            event.data.object.id,
+            {
+              expand: ['line_items'],
+            }
+          );
+          const lineItems = sessionWithLineItems.line_items;
+    }
+    return NextResponse.json({ received: true});
+};
  
-export default POST;
