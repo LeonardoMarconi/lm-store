@@ -36,17 +36,21 @@ export const CartContext = createContext<ICartContext>({
 })
 
 const CartProvider = ({children}:{children: ReactNode}) => {
+   
     const [products, setProducts] =  useState<CartProduct[]>(
         JSON.parse(localStorage.getItem("@lm-store/cart-products") || "[]")
-      );    
-
-    {/* useEffect(() => {
-        setProducts(
-          JSON.parse(localStorage.getItem("@lm-store/cart-products") || "[]"),
-        );
-      }, []);*/}
+      ); 
     
     useEffect(() => {
+        if (typeof localStorage !== 'undefined') {
+            localStorage.setItem("@lm-store/cart-products", JSON.stringify(products));
+          } else if (typeof sessionStorage !== 'undefined') {
+            // Fallback to sessionStorage if localStorage is not supported
+            sessionStorage.setItem("@lm-store/cart-products", JSON.stringify(products));
+          } else {
+            // If neither localStorage nor sessionStorage is supported
+            console.log('Web Storage is not supported in this environment.');
+          }
         localStorage.setItem("@lm-store/cart-products", JSON.stringify(products));
       }, [products]);
 
