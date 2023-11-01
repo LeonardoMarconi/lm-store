@@ -17,7 +17,11 @@ async function OrderPage(){
             userId: (user as any).id,
         },
         include:{
-            orderProducts: true,
+            orderProducts: {
+                include: {
+                    product: true,
+                }
+            }
         },
     })
 
@@ -27,10 +31,12 @@ async function OrderPage(){
                 <PackageSearchIcon />
                 Meus Pedidos
             </Badge>
-            <div className="flex flex-col gap-5">
-                {orders.map(order => (
-                    <OrderItem key={order.id} order={order} />
-                ))}
+            <div className="flex flex-col p-5 w-full items-center justify-center">
+                <div className="flex w-full flex-col gap-5 md:w-[60%]">
+                    {orders.map(order => (
+                        <OrderItem key={order.id} order={order} />
+                    ))}
+                </div>
             </div>
         </div>
      );
