@@ -15,11 +15,13 @@ import { toast } from "./use-toast";
 import { ToastAction } from "./toast";
 import { signIn, useSession } from "next-auth/react";
 import { ThreeDots } from "react-loader-spinner";
+import createOrder from "@/actions/order";
 
 const Cart = () => {
     const {products, total, subtotal, totalDiscount} = useContext(CartContext);
     const {status} = useSession();
     const [loading, setLoading] = useState(false);
+    const {data}= useSession();
 
     const handleFinishPurchaseClick = async () =>{
         if(status === 'unauthenticated'){
@@ -43,6 +45,7 @@ const Cart = () => {
               });
         }else{
             setLoading(true);
+            await createOrder(products, (data?.user as any).id);
             const checkout = await createCheckout(products);
             const stripe = await loadStripe(
                 process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
