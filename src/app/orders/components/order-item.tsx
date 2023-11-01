@@ -4,6 +4,8 @@ import { Prisma } from "@prisma/client";
 import { format } from 'date-fns';
 import OrderProductItem from "./order-product-item";
 import { Separator } from "@/components/ui/separator";
+import { useMemo } from "react";
+import computeProductTotalPrice from "@/helpers/product";
 
 interface OrdemItemProps{
     order: Prisma.OrderGetPayload<{
@@ -18,6 +20,21 @@ interface OrdemItemProps{
 }
 
 const OrderItens = ({order}:OrdemItemProps) => {
+    const subtotal = useMemo(()=>{
+        return order.orderProducts.reduce((acc, orderProduct)=>{
+            return acc + Number(orderProduct.product.basePrice) * orderProduct.quantity;
+        },0);
+    },[order.orderProducts]);
+
+    const total = useMemo(()=>{
+        return order.orderProducts.reduce((acc, orderProduct)=>{
+            const productWithTotalPrice = computeProductTotalPrice(orderProduct.product);
+            return acc + productWithTotalPrice.totalPrice * orderProduct.quantity;
+        },0);
+    },[order.orderProducts]);
+
+    const totalDiscount = total - subtotal;
+    
     return ( 
         <Card className="px-5">
             <Separator className="bg-primary"/>
@@ -31,7 +48,7 @@ const OrderItens = ({order}:OrdemItemProps) => {
                     </AccordionTrigger>
                     <AccordionContent>
                         <div className="flex flex-col gap-4">
-                            <div className="flex items-center justify-between">
+                            <div className="flex items-center justify-between mb-3">
                                 <div className="font-bold">
                                     <p>Status</p>
                                     {order.status === 'PAYMENT_CONFIRMED'?(
@@ -53,6 +70,28 @@ const OrderItens = ({order}:OrdemItemProps) => {
                             {order.orderProducts.map(orderProduct => (
                                 <OrderProductItem key={orderProduct.id} orderProduct={orderProduct} />
                             ))}
+                            <div className="flex flex-col gap-3">
+                                <Separator/>
+                                <div className="flex items-center justify-between text-sm">
+                                    <p>Subtotal</p>
+                                    <p>{subtotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+                                </div>
+                                <Separator />
+                                <div className="flex items-center justify-between text-sm">
+                                    <p>Entrega</p>
+                                    <p>Grátis</p>
+                                </div>
+                                <Separator />
+                                <div className="flex items-center justify-between text-sm">
+                                    <p>Descontos</p>
+                                    <p>{totalDiscount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+                                </div>
+                                <Separator />
+                                <div className="flex items-center justify-between text-lg font-bold">
+                                    <p>Total</p>
+                                    <p>{total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+                                </div>
+                            </div>
                         </div>
                     </AccordionContent>
                 </AccordionItem>
