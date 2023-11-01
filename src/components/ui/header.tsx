@@ -1,6 +1,6 @@
 "use client";
 
-import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PercentIcon, ShoppingCartIcon } from "lucide-react";
+import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PackageSearchIcon, PercentIcon, ShoppingCartIcon } from "lucide-react";
 import { Button } from "./button";
 import { Card } from "./card";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
@@ -97,6 +97,17 @@ const Header = () => {
                                 </Button>
                             </Link>
                         </SheetClose>
+
+                        {status === 'authenticated' &&(
+                        <SheetClose asChild>
+                            <Link href="/orders">
+                                <Button variant="secondary" className="w-full justify-start gap-2">
+                                    <PackageSearchIcon />
+                                    Meus Pedidos
+                                </Button>
+                            </Link>
+                        </SheetClose>
+                        )}
 
                         <SheetClose asChild>
                             <Link href="/category/sales">
