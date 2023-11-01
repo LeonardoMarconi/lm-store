@@ -5,7 +5,7 @@ import { CartProduct } from "@/providers/cart";
 import { getServerSession } from "next-auth/next";
 import Stripe from 'stripe';
 
-export const createCheckout = async (products: CartProduct[]) => {
+export const createCheckout = async (products: CartProduct[], orderId: string) => {
 
     const data = await getServerSession(authOptions);
     
@@ -18,10 +18,13 @@ export const createCheckout = async (products: CartProduct[]) => {
         mode:'payment',
         success_url:'http://localhost:3000/',
         cancel_url:'http://localhost:3000/',
+        metadata:{
+            orderId,
+        },
         customer_email: (String(data?.user?.email)),
         billing_address_collection: 'auto',
         shipping_address_collection: {
-        allowed_countries: ['BR'],
+            allowed_countries: ['BR'],
         },
         line_items:products.map(product => {
             return{
