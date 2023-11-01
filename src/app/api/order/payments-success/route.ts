@@ -24,13 +24,7 @@ export const POST = async (request: Request) => {
     if(event.type === 'checkout.session.completed'){
         const session = event.data.object as any;
 
-        const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
-            event.data.object.id,
-            {
-              expand: ['line_items'],
-            }
-          );
-        const lineItems = sessionWithLineItems.line_items;
+        const address = event.data.object.shipping_details?.address;
 
         await prismaClient.order.update({
             where:{
@@ -39,6 +33,17 @@ export const POST = async (request: Request) => {
             data:{
                 status: 'PAYMENT_CONFIRMED',
             },
+        });
+
+        await prismaClient.orderAddressDelivery.create({
+            data:{
+                address: address?.line1 as string,
+                district: address?.line2 as string,
+                postalCode: address?.postal_code as string,
+                city: address?.city as string,
+                state: address?.state as string,
+                orderId: session.metadata.orderId
+            }
         });
         
     }
