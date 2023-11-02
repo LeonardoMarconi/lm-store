@@ -17,11 +17,13 @@ async function OrderPage(){
             userId: (user as any).id,
         },
         include:{
+            orderAddressDelivery:true,
             orderProducts: {
                 include: {
                     product: true,
                 }
-            }
+            },
+            
         },
     })
 
