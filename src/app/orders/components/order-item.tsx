@@ -1,3 +1,5 @@
+"use client";
+
 import { Accordion, AccordionTrigger, AccordionItem, AccordionContent } from "@/components/ui/accordion";
 import { Card } from "@/components/ui/card";
 import { Prisma } from "@prisma/client";
@@ -6,6 +8,9 @@ import OrderProductItem from "./order-product-item";
 import { Separator } from "@/components/ui/separator";
 import { useMemo } from "react";
 import computeProductTotalPrice from "@/helpers/product";
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import OrderAddressModify from "./order-address-modify";
 
 interface OrdemItemProps{
     order: Prisma.OrderGetPayload<{
@@ -14,12 +19,14 @@ interface OrdemItemProps{
                 include:{
                     product: true;
                 }
-            }
+            },
+            orderAddressDelivery: true,
         },
     }>;
 }
 
 const OrderItens = ({order}:OrdemItemProps) => {
+
     const subtotal = useMemo(()=>{
         return order.orderProducts.reduce((acc, orderProduct)=>{
             return acc + Number(orderProduct.product.basePrice) * orderProduct.quantity;
@@ -54,7 +61,7 @@ const OrderItens = ({order}:OrdemItemProps) => {
                                     {order.status === 'PAYMENT_CONFIRMED'?(
                                         <p className="text-primary">Pago</p>
                                     ):(
-                                        <p className="text-[red]">Aguardando Pagamento</p>
+                                        <p className="text-[darkorange]">Aguardando Pagamento</p>
                                     )}
                                     
                                 </div>
@@ -91,6 +98,42 @@ const OrderItens = ({order}:OrdemItemProps) => {
                                     <p>Total</p>
                                     <p>{total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
                                 </div>
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button size="lg" variant="outline">
+                                            <p>Ver Endereço de Entrega</p>
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                        <AlertDialogTitle>Endereço de Entrega</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                        {order.orderAddressDelivery.length === 0 && 
+                                            <div className="flex items-center gap-1">
+                                                <h2>Não foi inserido endereço no checkout, para incluir clique em "Alterar Endereço"</h2>
+                                            </div>
+                                            }
+                                        {order.orderAddressDelivery.map(orderAddress => (
+                                        <div className="flex items-center gap-4">
+                                            <div className="flex flex-col">
+                                            <p className="text-sm">{orderAddress.address}, {orderAddress.district}</p>
+                                            <div className="flex items-center gap-2">   
+                                                <p className="font-semibold text-sm">{orderAddress.city}, {orderAddress.state}</p>                                    
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <span>CEP: {orderAddress.postalCode}</span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        ))}
+                                        </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                        <AlertDialogAction>Ok</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                                <OrderAddressModify/>
                             </div>
                         </div>
                     </AccordionContent>
