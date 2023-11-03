@@ -23,17 +23,21 @@ const Cart = () => {
     const [loading, setLoading] = useState(false);
     const {data}= useSession();
 
+    const handleLogin = async ()=>{
+        await signIn();
+    }
+
     const handleFinishPurchaseClick = async () =>{
         if(status === 'unauthenticated'){
             toast({
                 variant: "default",
                 title: "Aviso ⚠️⚠️⚠️",
-                description: 'Você precisa estar logado para finalizar sua compra... Aguarde, você será redirecionado...',
-                action:<ToastAction altText="Fechar">
-                            Fechar
+                description: 'Você precisa estar logado para finalizar sua compra... Clique em realizar login para você será redirecionado...',
+                action:<ToastAction altText="Realizar Login">
+                           <button onClick={handleLogin}>Realizar Login</button>
                         </ToastAction>,
               });
-              await signIn();
+              
         }else if(products.length <= 0){
             toast({
                 variant: "default",
