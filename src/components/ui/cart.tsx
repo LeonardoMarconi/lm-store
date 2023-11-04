@@ -87,7 +87,7 @@ const Cart = () => {
                 </div>
             )}
             {products.map((product) => (
-                <div className=" flex h-full flex-col gap-5 mt-2 mr-1">
+                <div className="flex h-full flex-col gap-5 mt-2 mr-1">
                     <CartItem  key={product.id} product={computeProductTotalPrice(product as any) as any} />
                 </div>
             ))}
