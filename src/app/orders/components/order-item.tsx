@@ -1,5 +1,3 @@
-"use client";
-
 import { Accordion, AccordionTrigger, AccordionItem, AccordionContent } from "@/components/ui/accordion";
 import { Card } from "@/components/ui/card";
 import { Prisma } from "@prisma/client";
@@ -10,6 +8,9 @@ import { useMemo } from "react";
 import computeProductTotalPrice from "@/helpers/product";
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { CartProduct } from "@/providers/cart";
+import createOrder from "@/actions/order";
+import { loadStripe } from "@stripe/stripe-js";
 
 interface OrdemItemProps{
     order: Prisma.OrderGetPayload<{
@@ -40,6 +41,7 @@ const OrderItens = ({order}:OrdemItemProps) => {
     },[order.orderProducts]);
 
     const totalDiscount = total - subtotal;
+
     
     return ( 
         <Card className="px-5">
