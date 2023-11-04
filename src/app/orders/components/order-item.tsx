@@ -10,7 +10,6 @@ import { useMemo } from "react";
 import computeProductTotalPrice from "@/helpers/product";
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import OrderAddressModify from "./order-address-modify";
 
 interface OrdemItemProps{
     order: Prisma.OrderGetPayload<{
@@ -133,7 +132,6 @@ const OrderItens = ({order}:OrdemItemProps) => {
                                         </AlertDialogFooter>
                                     </AlertDialogContent>
                                 </AlertDialog>
-                                <OrderAddressModify/>
                             </div>
                         </div>
                     </AccordionContent>
