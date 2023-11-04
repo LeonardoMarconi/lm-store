@@ -5,6 +5,8 @@
 A LM Store é um e-commerce utilizando tecnologias do Next.js.
 Esse foi construido e explicado durante as lives realizadas pelo [Felipe Rocha na Full Stack Week](https://github.com/felipemotarocha/fullstackweek-store). 
 
+O Projeto está disponível no endereço: [https://lm-store-commerce.vercel.app/](https://lm-store-commerce.vercel.app/)
+
 ## Tecnologias Utilizadas 🚀
 
  - React: Uma biblioteca JavaScript popular para construir interfaces de usuário interativas.
