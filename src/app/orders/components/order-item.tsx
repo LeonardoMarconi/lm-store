@@ -42,7 +42,6 @@ const OrderItens = ({order}:OrdemItemProps) => {
 
     const totalDiscount = total - subtotal;
 
-    
     return ( 
         <Card className="px-5">
             <Separator className="bg-primary"/>
@@ -111,9 +110,9 @@ const OrderItens = ({order}:OrdemItemProps) => {
                                         <AlertDialogDescription>
                                         {order.orderAddressDelivery.length === 0 && 
                                             <div className="flex items-center gap-1">
-                                                <h2>Não foi inserido endereço no checkout, para incluir clique em "Alterar Endereço"</h2>
+                                                <h2>Não foi inserido endereço no checkout, para incluir clique em Alterar Endereço</h2>
                                             </div>
-                                            }
+                                        }
                                         {order.orderAddressDelivery.map(orderAddress => (
                                         <div className="flex items-center gap-4">
                                             <div className="flex flex-col">
