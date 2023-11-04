@@ -5,7 +5,7 @@
 A LM Store é um e-commerce utilizando tecnologias do Next.js.
 Esse foi construido e explicado durante as lives realizadas pelo [Felipe Rocha na Full Stack Week](https://github.com/felipemotarocha/fullstackweek-store). 
 
-##Tecnologias Utilizadas 🚀
+## Tecnologias Utilizadas 🚀
 
  - React: Uma biblioteca JavaScript popular para construir interfaces de usuário interativas.
  - Next.js 13: Um framework React que oferece renderização do lado do servidor (SSR), geração estática (SSG), entre muitos outros recursos.
