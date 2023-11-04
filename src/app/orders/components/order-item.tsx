@@ -114,7 +114,7 @@ const OrderItens = ({order}:OrdemItemProps) => {
                                             </div>
                                         }
                                         {order.orderAddressDelivery.map(orderAddress => (
-                                        <div className="flex items-center gap-4">
+                                        <div key={orderAddress.id} className="flex items-center gap-4">
                                             <div className="flex flex-col">
                                             <p className="text-sm">{orderAddress.address}, {orderAddress.district}</p>
                                             <div className="flex items-center gap-2">   
