@@ -1,6 +1,6 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { CartProduct } from "@/providers/cart";
 import { getServerSession } from "next-auth/next";
 import Stripe from 'stripe';
