@@ -1,5 +1,11 @@
 # LM Store 🛍️🛒
 
+![GitHub repo size](https://img.shields.io/github/repo-size/LeonardoMarconi/lm-store?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/LeonardoMarconi/lm-store?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/LeonardoMarconi/lm-store?style=for-the-badge)
+![Bitbucket open issues](https://img.shields.io/bitbucket/issues/LeonardoMarconi/lm-store?style=for-the-badge)
+![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/LeonardoMarconi/lm-store?style=for-the-badge)
+
 ## 💻 Projeto
 
 A LM Store é um e-commerce utilizando tecnologias do Next.js.
